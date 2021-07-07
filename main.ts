@@ -6,6 +6,13 @@ sprites.onOverlap(SpriteKind.Food, SpriteKind.Player, function (sprite, otherSpr
     sprite.destroy(effects.confetti, 500)
     ship.say(":)", 500)
     info.changeScoreBy(10)
+    info.changeLifeBy(1)
+})
+sprites.onOverlap(SpriteKind.Food, SpriteKind.Projectile, function (sprite, otherSprite) {
+    sprite.destroy(effects.confetti, 500)
+    ship.say(":(", 500)
+    info.changeScoreBy(0)
+    info.changeLifeBy(0)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprite.destroy()
@@ -156,7 +163,17 @@ scene.setBackgroundImage(img`
     9fffff99ff999f9ffff9ff9ff99fff99ff999ff999f999ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     9fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     `)
-game.onUpdateInterval(500, function () {
+game.onUpdateInterval(800, function () {
+    projectile = sprites.createProjectileFromSide(asteroids[randint(0, asteroids.length - 1)], -15, 100)
+    projectile.setKind(SpriteKind.Enemy)
+    projectile.x = randint(10, 150)
+})
+game.onUpdateInterval(800, function () {
+    projectile = sprites.createProjectileFromSide(asteroids[randint(0, asteroids.length - 1)], 10, 75)
+    projectile.setKind(SpriteKind.Enemy)
+    projectile.x = randint(10, 150)
+})
+game.onUpdateInterval(800, function () {
     projectile = sprites.createProjectileFromSide(asteroids[randint(0, asteroids.length - 1)], 0, 75)
     projectile.setKind(SpriteKind.Enemy)
     projectile.x = randint(10, 150)
